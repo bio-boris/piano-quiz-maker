@@ -108,7 +108,7 @@
 
   function shouldDrawOctopuses() {
     if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
-      return true;
+      return false;
     }
     const hasContrastPreference =
       window.matchMedia("(prefers-contrast: more)").matches ||
