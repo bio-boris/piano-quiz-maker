@@ -82,8 +82,10 @@
       ctx.strokeRect(key.x, key.y, key.width, key.height);
     }
 
-    drawOctopuses(ctx, layout.whiteKeys, 0.62, layout.keyHeight * 0.42, layout.totalKeys);
-    drawOctopuses(ctx, layout.blackKeys, 0.48, layout.keyHeight * 0.24, layout.totalKeys);
+    if (shouldDrawOctopuses()) {
+      drawOctopuses(ctx, layout.whiteKeys, 0.62, layout.keyHeight * 0.42, layout.totalKeys);
+      drawOctopuses(ctx, layout.blackKeys, 0.48, layout.keyHeight * 0.24, layout.totalKeys);
+    }
   }
 
   function octopusColor(semitone, totalKeys) {
@@ -102,6 +104,16 @@
       ctx.fillText(OCTOPUS, key.x + key.width / 2, key.y + key.height * yRatio);
     }
     ctx.restore();
+  }
+
+  function shouldDrawOctopuses() {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+      return true;
+    }
+    return !(
+      window.matchMedia("(forced-colors: active)").matches ||
+      window.matchMedia("(prefers-contrast: more)").matches
+    );
   }
 
   // Returns the semitone offset of the key at the given position, or null.
