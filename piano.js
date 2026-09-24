@@ -109,7 +109,7 @@
 
   function shouldDrawOctopuses() {
     if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
-      return true;
+      return false;
     }
     if (!octopusContrastQueries) {
       octopusContrastQueries = {
