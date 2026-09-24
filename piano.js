@@ -8,7 +8,7 @@
 
 (function () {
   const PRESSED_COLOR = "#8e3b46";
-  const OCTOPUS = "🐙";
+  const OCTOPUS = "\u{1F419}\u{FE0E}";
   let octopusContrastQueries = null;
 
   // Build the layout of keys for a keyboard.
