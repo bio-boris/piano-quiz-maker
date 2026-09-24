@@ -9,6 +9,7 @@
 (function () {
   const PRESSED_COLOR = "#8e3b46";
   const OCTOPUS = "🐙";
+  let octopusContrastQueries = null;
 
   // Build the layout of keys for a keyboard.
   // rootPitch: absolute pitch of the first (leftmost) key, 12 * oct + pc.
@@ -110,14 +111,19 @@
     if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
       return false;
     }
+    if (!octopusContrastQueries) {
+      octopusContrastQueries = {
+        forcedColors: window.matchMedia("(forced-colors: active)"),
+        prefersMore: window.matchMedia("(prefers-contrast: more)"),
+        prefersLess: window.matchMedia("(prefers-contrast: less)"),
+        prefersCustom: window.matchMedia("(prefers-contrast: custom)"),
+      };
+    }
     const hasContrastPreference =
-      window.matchMedia("(prefers-contrast: more)").matches ||
-      window.matchMedia("(prefers-contrast: less)").matches ||
-      window.matchMedia("(prefers-contrast: custom)").matches;
-    return !(
-      window.matchMedia("(forced-colors: active)").matches ||
-      hasContrastPreference
-    );
+      octopusContrastQueries.prefersMore.matches ||
+      octopusContrastQueries.prefersLess.matches ||
+      octopusContrastQueries.prefersCustom.matches;
+    return !(octopusContrastQueries.forcedColors.matches || hasContrastPreference);
   }
 
   // Returns the semitone offset of the key at the given position, or null.
