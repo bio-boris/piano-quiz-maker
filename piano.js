@@ -115,12 +115,9 @@
       octopusContrastQueries = {
         forcedColors: window.matchMedia("(forced-colors: active)"),
         prefersMore: window.matchMedia("(prefers-contrast: more)"),
-        prefersCustom: window.matchMedia("(prefers-contrast: custom)"),
       };
     }
-    const hasContrastPreference =
-      octopusContrastQueries.prefersMore.matches ||
-      octopusContrastQueries.prefersCustom.matches;
+    const hasContrastPreference = octopusContrastQueries.prefersMore.matches;
     return !(octopusContrastQueries.forcedColors.matches || hasContrastPreference);
   }
 
