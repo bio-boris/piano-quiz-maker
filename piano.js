@@ -8,6 +8,7 @@
 
 (function () {
   const PRESSED_COLOR = "#8e3b46";
+  const OCTOPUS = "🐙";
 
   // Build the layout of keys for a keyboard.
   // rootPitch: absolute pitch of the first (leftmost) key, 12 * oct + pc.
@@ -79,6 +80,25 @@
       ctx.fillRect(key.x, key.y, key.width, key.height);
       ctx.strokeStyle = "black";
       ctx.strokeRect(key.x, key.y, key.width, key.height);
+    }
+
+    drawOctopuses(ctx, layout.whiteKeys, 0.62, layout.keyHeight * 0.42);
+    drawOctopuses(ctx, layout.blackKeys, 0.48, layout.keyHeight * 0.24);
+  }
+
+  function octopusColor(semitone, totalKeys) {
+    const hue = (semitone * 137.5) % 360;
+    const lightness = totalKeys > 20 ? 52 : 48;
+    return `hsl(${hue} 80% ${lightness}%)`;
+  }
+
+  function drawOctopuses(ctx, keys, yRatio, fontSize) {
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = `${Math.max(10, Math.round(fontSize))}px sans-serif`;
+    for (const key of keys) {
+      ctx.fillStyle = octopusColor(key.semitone, keys.length);
+      ctx.fillText(OCTOPUS, key.x + key.width / 2, key.y + key.height * yRatio);
     }
   }
 
