@@ -117,6 +117,9 @@
         prefersMore: window.matchMedia("(prefers-contrast: more)"),
       };
     }
+    if (octopusContrastQueries.prefersMore.media === "not all") {
+      return false;
+    }
     const hasContrastPreference = octopusContrastQueries.prefersMore.matches;
     return !(octopusContrastQueries.forcedColors.matches || hasContrastPreference);
   }
