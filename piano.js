@@ -110,9 +110,16 @@
     if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
       return true;
     }
+    const contrastNoPreference = window.matchMedia("(prefers-contrast: no-preference)");
+    const contrastMediaSupported = contrastNoPreference.media !== "not all";
+    const hasContrastPreference =
+      window.matchMedia("(prefers-contrast: more)").matches ||
+      window.matchMedia("(prefers-contrast: less)").matches ||
+      window.matchMedia("(prefers-contrast: custom)").matches ||
+      (contrastMediaSupported && !contrastNoPreference.matches);
     return !(
       window.matchMedia("(forced-colors: active)").matches ||
-      window.matchMedia("(prefers-contrast: more)").matches
+      hasContrastPreference
     );
   }
 
